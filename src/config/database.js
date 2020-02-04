@@ -1,13 +1,13 @@
 require('dotenv').config()
 
 module.exports = {
+  dialect: process.env.DATABASE,
+  host: process.env.HOST,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  host: process.env.DB_HOST,
-  dialect: process.env.DB_DIALECT,
   define: {
-    timestamp: true,
+    timestamps: true,
     underscored: true
   }
 }

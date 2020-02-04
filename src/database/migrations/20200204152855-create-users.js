@@ -5,15 +5,11 @@ module.exports = {
     return queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
+        allowNull: false,
         autoIncrement: true,
-        allowNull: false
+        primaryKey: true
       },
       name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      email: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -21,8 +17,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      animes: {
-        type: Sequelize.JSON
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        isEmail: true,
+        unique: true
+      },
+      filters: {
+        type: Sequelize.JSON,
+        allowNull: true
       },
       role_name: {
         type: Sequelize.STRING,
