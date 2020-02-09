@@ -8,7 +8,7 @@ class User extends Model {
         name: DataTypes.STRING,
         password: DataTypes.STRING,
         email: DataTypes.STRING,
-        animes: DataTypes.JSON,
+        filters: DataTypes.JSON,
         role_name: DataTypes.STRING,
         date_birth: DataTypes.DATE
       },
