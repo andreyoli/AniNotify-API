@@ -3,12 +3,27 @@ version: '3.7'
 services:
   db:
     image: mysql
-    container_name: mysql-container
+    container_name: mysql_container
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
       - '3306:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASS}'
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
     volumes:
-      - ./src/database/data:/var/lib/mysql
+      - ./.dbcache/mysql/data:/data/db
+  api:
+    image: node:12.15-slim
+    container_name: node_api
+    working_dir: '/src'
+    volumes:
+      - ./:/src
+    command: 'yarn start'
+    networks:
+      - backend
+    ports:
+      - '3000:3000'
+
+networks:
+  backend:
+    driver: 'bridge'
