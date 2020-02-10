@@ -4,6 +4,9 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const Token = require('../auth/token.auth')
 
+const Parser = require('rss-parser')
+const parser = new Parser()
+
 module.exports = {
   async store(req, res, next) {
     try {
@@ -51,6 +54,26 @@ module.exports = {
       const token = await Token.generate(JWTData)
 
       res.json({ token })
+    } catch (err) {
+      next(err)
+    }
+  },
+
+  async user_animes(req, res, next) {
+    try {
+      const { filters } = req.body
+      const feed = await parser.parseURL('https://nyaa.si/?page=rss&u=ohys')
+      const feedAtt = feed.items.map(item => {
+        const regex = /(?<=\])[^\][\r\n]*(?=\()/gm
+        const result = regex
+          .exec(item.title)
+          .toString()
+          .trim()
+
+        return result
+      })
+
+      res.send(feedAtt)
     } catch (err) {
       next(err)
     }
