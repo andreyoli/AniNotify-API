@@ -61,7 +61,6 @@ module.exports = {
 
   async user_animes(req, res, next) {
     try {
-      const { filters } = req.body
       const feed = await parser.parseURL('https://nyaa.si/?page=rss&u=ohys')
       const feedAtt = feed.items.map(item => {
         const regex = /(?<=\])[^\][\r\n]*(?=\()/gm
